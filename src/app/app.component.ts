@@ -10,15 +10,28 @@ import { NgrxCounterComponent } from './components/ngrx-counter/ngrx-counter.com
   template: `
     <h1>State Management Comparison</h1>
     <app-primitive-counter 
+      *ngIf="showPropsCounter"
       [count]="primitiveCount" 
       (countChange)="onCountChange($event)">
     </app-primitive-counter>
+    <button (click)="showPropsCounter = !showPropsCounter">Toggle</button>
     <hr>
-    <app-ngrx-counter></app-ngrx-counter>
+    <app-ngrx-counter *ngIf="showNGRXCounter"></app-ngrx-counter>
+    <button (click)="showNGRXCounter = !showNGRXCounter">Toggle</button>
   `
 })
 export class AppComponent {
-  primitiveCount = 0;
+
+  showNGRXCounter: boolean;
+  showPropsCounter: boolean;
+  primitiveCount: number;
+
+  constructor() {
+    this.showPropsCounter = true;
+    this.showNGRXCounter = true;
+    this.primitiveCount = 0;
+  }
+
   onCountChange(count: number) {
     this.primitiveCount = count;
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges,OnDestroy } from '@angular/core';
 import { DisplayValueComponent } from '../display-value/display-value.component';
 import { CommonModule } from '@angular/common';
 
@@ -15,7 +15,21 @@ import { CommonModule } from '@angular/common';
   `,
   styles: [`button { margin: 0 5px; }`]
 })
-export class PrimitiveCounterComponent {
+export class PrimitiveCounterComponent implements OnInit, OnChanges, OnDestroy {
+  
+  ngOnChanges() {
+    console.log('PrimitiveCounterComponent count changed:', this.count);
+  }
+
+  ngOnInit() {
+    console.log('PrimitiveCounterComponent initialized');
+  }
+
+  ngOnDestroy() {
+    console.log('PrimitiveCounterComponent destroyed');
+    this.countChange.emit(0) // Reset count on destroy
+  }
+
   @Input() count: number = 0;
   @Output() countChange = new EventEmitter<number>();
 
